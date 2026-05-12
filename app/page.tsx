@@ -4,6 +4,7 @@ const cards = [
   ["Adjacent niches", "Find narrower, less obvious markets that could fit a proven business model."],
   ["Automation angles", "Map which parts of the offer AI can help research, generate, monitor, or fulfill."],
   ["Babysitting risk", "Spot ideas that are likely to become high-touch jobs before you waste months building them."],
+  ["Master prompt generation", "Turn the report into a reusable prompt you can paste into your own AI chatbot to keep refining, testing, and expanding the idea."],
 ];
 
 export default function Home() {
