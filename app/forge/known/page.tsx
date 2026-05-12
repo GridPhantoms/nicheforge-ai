@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { assetOptions, automationLevels, avoidOptions, businessModels, callToleranceLevels } from "../explore/options";
 
 type FormState = {
   betaCode: string;
@@ -11,20 +12,40 @@ type FormState = {
   modelPreference: string;
   automationLevel: string;
   callTolerance: string;
-  assets: string;
-  avoid: string;
+  assets: string[];
+  customAssets: string;
+  avoid: string[];
+  customAvoid: string;
 };
 
 const initialState: FormState = {
   betaCode: "",
   idea: "",
   audience: "",
-  modelPreference: "",
-  automationLevel: "95% AI-assisted if possible",
-  callTolerance: "Minimal calls / low-touch",
-  assets: "",
-  avoid: "",
+  modelPreference: "No preference",
+  automationLevel: "85% automated / mostly systemized",
+  callTolerance: "One onboarding call is okay",
+  assets: [],
+  customAssets: "",
+  avoid: [],
+  customAvoid: "",
 };
+
+function toggle(list: string[], value: string) {
+  return list.includes(value) ? list.filter((item) => item !== value) : [...list, value];
+}
+
+function ChoiceButtons({ options, selected, onToggle }: { options: string[]; selected: string[]; onToggle: (value: string) => void }) {
+  return (
+    <div className="pill-grid">
+      {options.map((option) => (
+        <button className={`pill-choice ${selected.includes(option) ? "selected" : ""}`} key={option} onClick={() => onToggle(option)} type="button">
+          {option}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function KnownIdeaPage() {
   const router = useRouter();
@@ -36,7 +57,12 @@ export default function KnownIdeaPage() {
 
   function submit(event: FormEvent) {
     event.preventDefault();
-    sessionStorage.setItem("nicheforge:pending-report", JSON.stringify({ ...form, mode: "known" }));
+    sessionStorage.setItem("nicheforge:pending-report", JSON.stringify({
+      ...form,
+      assets: [...form.assets, form.customAssets].filter(Boolean).join("; "),
+      avoid: [...form.avoid, form.customAvoid].filter(Boolean).join("; "),
+      mode: "known",
+    }));
     router.push("/report");
   }
 
@@ -55,16 +81,28 @@ export default function KnownIdeaPage() {
 
       <section className="section">
         <form className="panel form-grid wide-form" onSubmit={submit}>
-          <label>Beta access code<input value={form.betaCode} onChange={(e) => update("betaCode", e.target.value)} placeholder="Enter private beta code" required /></label>
-          <label>Business idea, model, niche, competitor, X post, or rough concept<textarea value={form.idea} onChange={(e) => update("idea", e.target.value)} placeholder="Example: AI receptionist for dentists, automated competitor tracker for med spas, or an X post about a creator selling templates..." required /></label>
-          <label>Target audience / buyer<input value={form.audience} onChange={(e) => update("audience", e.target.value)} placeholder="Optional" /></label>
+          <label><span>Beta access code <em className="required">required</em></span><input value={form.betaCode} onChange={(e) => update("betaCode", e.target.value)} placeholder="Enter private beta code" required /></label>
+          <label><span>Business idea, model, niche, competitor, X post, or rough concept <em className="required">required</em></span><textarea value={form.idea} onChange={(e) => update("idea", e.target.value)} placeholder="Example: AI receptionist for dentists, automated competitor tracker for med spas, or an X post about a creator selling templates..." required /></label>
+          <label><span>Target audience / buyer <em>optional</em></span><input value={form.audience} onChange={(e) => update("audience", e.target.value)} placeholder="Example: local med spa owners, executive pastors, solo consultants, agency teams" /></label>
           <div className="two">
-            <label>Preferred model<select value={form.modelPreference} onChange={(e) => update("modelPreference", e.target.value)}><option value="">No preference</option><option>Automated report/tool</option><option>Productized service</option><option>Micro-SaaS</option><option>Lead intelligence</option><option>Local business automation</option><option>Content/data business</option></select></label>
-            <label>Desired automation level<input value={form.automationLevel} onChange={(e) => update("automationLevel", e.target.value)} /></label>
+            <label><span>Preferred model <em>optional</em></span><select value={form.modelPreference} onChange={(e) => update("modelPreference", e.target.value)}>{businessModels.map((model) => <option key={model}>{model}</option>)}</select></label>
+            <label><span>Desired automation level <em>optional</em></span><select value={form.automationLevel} onChange={(e) => update("automationLevel", e.target.value)}>{automationLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
           </div>
-          <label>Client interaction tolerance<input value={form.callTolerance} onChange={(e) => update("callTolerance", e.target.value)} /></label>
-          <label>Skills, assets, audience, or advantages<textarea value={form.assets} onChange={(e) => update("assets", e.target.value)} placeholder="Optional" /></label>
-          <label>Niches, delivery styles, or risks to avoid<textarea value={form.avoid} onChange={(e) => update("avoid", e.target.value)} placeholder="Optional" /></label>
+          <label><span>Client interaction tolerance <em>optional</em></span><select value={form.callTolerance} onChange={(e) => update("callTolerance", e.target.value)}>{callToleranceLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
+
+          <div className="field-block">
+            <div className="field-label"><span>What advantages can you bring? <em>optional</em></span></div>
+            <p className="microcopy">Skills, assets, audience, or advantages means anything the report should consider: niche knowledge, writing ability, access to buyers, sales ability, no-code skills, or an existing audience.</p>
+            <ChoiceButtons options={assetOptions} selected={form.assets} onToggle={(value) => update("assets", toggle(form.assets, value))} />
+            <textarea value={form.customAssets} onChange={(e) => update("customAssets", e.target.value)} placeholder="Optional example: I know nonprofit ops, can write strong emails, have a local owner network, or can build Zapier automations." />
+          </div>
+
+          <div className="field-block">
+            <div className="field-label"><span>Anything you want to avoid? <em>optional</em></span></div>
+            <p className="microcopy">Interview-style preference check: what should NicheForge steer away from?</p>
+            <ChoiceButtons options={avoidOptions} selected={form.avoid} onToggle={(value) => update("avoid", toggle(form.avoid, value))} />
+            <textarea value={form.customAvoid} onChange={(e) => update("customAvoid", e.target.value)} placeholder="Optional example: avoid cold calls, avoid regulated niches, avoid heavy custom dashboards, or avoid ad-spend-dependent ideas." />
+          </div>
           <button type="submit">Generate NicheForge Report</button>
           <p className="notice">Brainstorming only. No guarantees, no financial/legal advice, and every idea needs real-world validation before building.</p>
         </form>
