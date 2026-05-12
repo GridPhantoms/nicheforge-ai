@@ -26,8 +26,8 @@ a { color: inherit; text-decoration: none; }
 
 .shell { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
 .nav { display: flex; align-items: center; justify-content: space-between; padding: 26px 0; }
-.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -0.02em; }
-.logo-mark { width: 34px; height: 34px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: 12px; background: linear-gradient(135deg, rgba(124,247,212,0.18), rgba(157,124,255,0.18)); }
+.logo { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -0.02em; }
+.logo-icon { width: 48px; height: 48px; display: block; border-radius: 15px; object-fit: cover; box-shadow: 0 0 24px rgba(124,247,212,0.18); }
 .nav-links { display: flex; gap: 20px; color: var(--muted); font-size: 14px; }
 .hero { padding: 70px 0 52px; display: grid; gap: 28px; }
 .compact-hero { padding-bottom: 20px; }
@@ -121,5 +121,6 @@ label em { color: var(--muted); font-style: normal; font-size: 12px; font-weight
 @media (max-width: 760px) {
   .grid, .two, .choice-grid, .six-grid, .example-row { grid-template-columns: 1fr; }
   .nav { align-items: flex-start; gap: 18px; flex-direction: column; }
+  .logo-icon { width: 42px; height: 42px; border-radius: 13px; }
   .report-header { align-items: flex-start; flex-direction: column; }
 }

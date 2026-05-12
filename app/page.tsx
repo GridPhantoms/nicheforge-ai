@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 const cards = [
@@ -11,7 +12,10 @@ export default function Home() {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
+        <Link href="/" className="logo">
+          <Image className="logo-icon" src="/nicheforge-icon.jpg" alt="NicheForge AI icon" width={96} height={96} priority />
+          <span>NicheForge AI</span>
+        </Link>
         <div className="nav-links">
           <Link href="/forge">Forge</Link>
           <Link href="/disclaimer">Disclaimer</Link>
