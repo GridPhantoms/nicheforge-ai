@@ -2,9 +2,23 @@
 
 import Link from "next/link";
 import { SiteHeader } from "../components/SiteHeader";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type Status = "loading" | "ready" | "error" | "missing";
+
+const REQUEST_STORAGE_KEY = "nicheforge:pending-report";
+const MAX_GENERATION_ATTEMPTS = 2;
+
+function getFriendlyErrorMessage(message: string) {
+  const normalized = message.toLowerCase();
+  if (normalized.includes("load failed") || normalized.includes("failed to fetch") || normalized.includes("networkerror")) {
+    return "The AI request took too long or the browser connection dropped. Your idea is still okay — retry with this tab open.";
+  }
+  if (normalized.includes("unexpected end") || normalized.includes("json")) {
+    return "The report response was interrupted before it finished loading. Please retry with this tab open.";
+  }
+  return message || "Something went wrong while generating the report.";
+}
 
 function renderInline(text: string) {
   const parts = text.split(/(\*\*[^*]+\*\*)/g);
@@ -85,6 +99,8 @@ export default function ReportPage() {
   const [status, setStatus] = useState<Status>("loading");
   const [report, setReport] = useState("");
   const [error, setError] = useState("");
+  const [payload, setPayload] = useState("");
+  const [attempt, setAttempt] = useState(1);
   const [copied, setCopied] = useState(false);
 
   async function copyReport() {
@@ -105,32 +121,51 @@ export default function ReportPage() {
     URL.revokeObjectURL(url);
   }
 
-  useEffect(() => {
-    async function generate() {
-      const raw = sessionStorage.getItem("nicheforge:pending-report");
-      if (!raw) {
-        setStatus("missing");
+  const generateReport = useCallback(async function runGeneration(raw: string, attemptNumber = 1) {
+    setStatus("loading");
+    setError("");
+    setAttempt(attemptNumber);
+
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: raw,
+      });
+      const contentType = response.headers.get("content-type") || "";
+      const data = contentType.includes("application/json")
+        ? await response.json()
+        : { error: await response.text() };
+
+      if (!response.ok) throw new Error(data.error || "Report generation failed.");
+      if (!data.report) throw new Error("The report response was empty. Please try again.");
+
+      setReport(data.report);
+      setStatus("ready");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Something went wrong.";
+      const retryable = /load failed|failed to fetch|networkerror|unexpected end|json/i.test(message);
+
+      if (attemptNumber < MAX_GENERATION_ATTEMPTS && retryable) {
+        window.setTimeout(() => runGeneration(raw, attemptNumber + 1), 1500);
         return;
       }
 
-      try {
-        const response = await fetch("/api/generate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: raw,
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || "Report generation failed.");
-        setReport(data.report);
-        setStatus("ready");
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "Something went wrong.");
-        setStatus("error");
-      }
+      setError(getFriendlyErrorMessage(message));
+      setStatus("error");
+    }
+  }, []);
+
+  useEffect(() => {
+    const raw = sessionStorage.getItem(REQUEST_STORAGE_KEY);
+    if (!raw) {
+      setStatus("missing");
+      return;
     }
 
-    generate();
-  }, []);
+    setPayload(raw);
+    generateReport(raw);
+  }, [generateReport]);
 
   return (
     <main className="shell">
@@ -141,7 +176,8 @@ export default function ReportPage() {
           <div className="orb" />
           <div className="eyebrow">Forging report</div>
           <h1>Mapping niches, automation angles, and babysitting traps…</h1>
-          <p className="lede">This usually takes 30–60 seconds in the private beta. Keep this page open while NicheForge builds the report.</p>
+          <p className="lede">This can take 60–90 seconds in the private beta. Keep this tab open while NicheForge builds the report.</p>
+          {attempt > 1 && <p className="notice">Connection hiccup detected. Retrying automatically… attempt {attempt} of {MAX_GENERATION_ATTEMPTS}.</p>}
           <div className="progress-bar"><span /></div>
         </section>
       )}
@@ -156,9 +192,13 @@ export default function ReportPage() {
 
       {status === "error" && (
         <section className="hero panel">
-          <h1>The report failed to generate.</h1>
+          <h1>The report needs another try.</h1>
+          <p className="lede">The AI generator may have taken too long or the browser connection may have dropped. Your saved request is still available on this device.</p>
           <p className="notice error">{error}</p>
-          <Link href="/forge" className="button">Try again</Link>
+          <div className="report-actions">
+            {payload && <button type="button" onClick={() => generateReport(payload)}>Retry saved report</button>}
+            <Link href="/forge" className="button secondary">Start over</Link>
+          </div>
         </section>
       )}
 
