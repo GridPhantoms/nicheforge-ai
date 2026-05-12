@@ -14,7 +14,7 @@ export function SiteHeader({ links }: SiteHeaderProps) {
   return (
     <nav className="nav">
       <Link href="/" className="logo">
-        <Image className="logo-icon" src="/nicheforge-icon.jpg" alt="NicheForge AI icon" width={96} height={96} priority />
+        <Image className="logo-icon" src="/nicheforge-icon.png" alt="NicheForge AI icon" width={96} height={96} priority />
         <span>NicheForge AI</span>
       </Link>
       <div className="nav-links">
