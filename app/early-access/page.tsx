@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 export default function EarlyAccessPage() {
@@ -27,6 +28,8 @@ export default function EarlyAccessPage() {
           <li>Flag any output that sounds too confident, hypey, or unrealistic.</li>
         </ul>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }
