@@ -1,26 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
+import { SiteFooter } from "./components/SiteFooter";
+import { SiteHeader } from "./components/SiteHeader";
 
 const cards = [
   ["Adjacent niches", "Find narrower, less obvious markets that could fit a proven business model."],
   ["Automation angles", "Map which parts of the offer AI can help research, generate, monitor, or fulfill."],
   ["Babysitting risk", "Spot ideas that are likely to become high-touch jobs before you waste months building them."],
-  ["Prompt generation", "Turn the report into a reusable prompt you can paste into your own AI chatbot to keep refining, testing, and expanding the idea."],
+  ["Prompt generation", "Create a reusable master prompt to keep refining and testing the idea."],
 ];
 
 export default function Home() {
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo">
-          <Image className="logo-icon" src="/nicheforge-icon.jpg" alt="NicheForge AI icon" width={96} height={96} priority />
-          <span>NicheForge AI</span>
-        </Link>
-        <div className="nav-links">
-          <Link href="/forge">Forge</Link>
-          <Link href="/disclaimer">Disclaimer</Link>
-        </div>
-      </nav>
+      <SiteHeader links={[{ href: "/forge", label: "Forge" }, { href: "/disclaimer", label: "Disclaimer" }]} />
 
       <section className="hero">
         <div className="eyebrow">AI Business Angle Reports</div>
@@ -50,7 +42,7 @@ export default function Home() {
         </p>
       </section>
 
-      <footer className="footer">© {new Date().getFullYear()} NicheForge AI. Brainstorming only. Validate before building.</footer>
+      <SiteFooter />
     </main>
   );
 }

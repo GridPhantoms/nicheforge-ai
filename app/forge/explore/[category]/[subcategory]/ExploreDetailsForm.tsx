@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { SiteHeader } from "../../../../components/SiteHeader";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
@@ -112,10 +112,7 @@ Generate several possible business concepts first, then select the strongest one
 
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href={`/forge/explore/${category.slug}`}>Back</Link><Link href="/forge">Change path</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: `/forge/explore/${category.slug}`, label: "Back" }, { href: "/forge", label: "Change path" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Path 2 / Step 3–4 of 4</div>

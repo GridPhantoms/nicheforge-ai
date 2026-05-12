@@ -1,12 +1,10 @@
 import Link from "next/link";
+import { SiteHeader } from "../components/SiteHeader";
 
 export default function EarlyAccessPage() {
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href="/forge">Forge</Link><Link href="/disclaimer">Disclaimer</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: "/forge", label: "Forge" }, { href: "/disclaimer", label: "Disclaimer" }]} />
 
       <section className="hero">
         <div className="eyebrow">Private early access</div>

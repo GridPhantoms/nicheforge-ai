@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteHeader } from "../../../components/SiteHeader";
 import { notFound } from "next/navigation";
 import { categoryFromSlug, optionSlug } from "../options";
 
@@ -9,10 +10,7 @@ export default async function ExploreCategoryPage({ params }: { params: Promise<
 
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href="/forge/explore">Back</Link><Link href="/early-access">Early access</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: "/forge/explore", label: "Back" }, { href: "/early-access", label: "Early access" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Path 2 / Step 2 of 4</div>

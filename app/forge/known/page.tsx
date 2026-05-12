@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { SiteHeader } from "../../components/SiteHeader";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { assetOptions, automationLevels, avoidOptions, businessModels, callToleranceLevels } from "../explore/options";
@@ -68,10 +68,7 @@ export default function KnownIdeaPage() {
 
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href="/forge">Change path</Link><Link href="/early-access">Early access</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: "/forge", label: "Change path" }, { href: "/early-access", label: "Early access" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Path 1 / focused idea</div>

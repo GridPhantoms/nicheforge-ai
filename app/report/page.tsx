@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { SiteHeader } from "../components/SiteHeader";
 import { useEffect, useState } from "react";
 
 type Status = "loading" | "ready" | "error" | "missing";
@@ -133,10 +134,7 @@ export default function ReportPage() {
 
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href="/forge">New report</Link><Link href="/disclaimer">Disclaimer</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: "/forge", label: "New report" }, { href: "/disclaimer", label: "Disclaimer" }]} />
 
       {status === "loading" && (
         <section className="loading-stage">

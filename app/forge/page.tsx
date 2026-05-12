@@ -1,12 +1,10 @@
 import Link from "next/link";
+import { SiteHeader } from "../components/SiteHeader";
 
 export default function ForgePage() {
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href="/">Home</Link><Link href="/early-access">Early access</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: "/", label: "Home" }, { href: "/early-access", label: "Early access" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Private beta forge</div>

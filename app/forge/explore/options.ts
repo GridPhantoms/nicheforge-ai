@@ -63,7 +63,7 @@ export const exploreCategories: ExploreCategory[] = [
   },
   {
     slug: "nonprofits-churches",
-    label: "Nonprofits & churches",
+    label: "Nonprofit sector",
     description: "Mission-driven teams with donors, volunteers, events, care needs, content, and limited admin bandwidth.",
     subcategories: [
       { label: "Donor communications", description: "Thank-yous, impact updates, reactivation, giving summaries." },

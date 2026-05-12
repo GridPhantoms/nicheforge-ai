@@ -1,12 +1,10 @@
-import Link from "next/link";
+import { SiteFooter } from "../components/SiteFooter";
+import { SiteHeader } from "../components/SiteHeader";
 
 export default function DisclaimerPage() {
   return (
     <main className="shell">
-      <nav className="nav">
-        <Link href="/" className="logo"><span className="logo-mark">NF</span> NicheForge AI</Link>
-        <div className="nav-links"><Link href="/">Home</Link><Link href="/forge">Forge</Link></div>
-      </nav>
+      <SiteHeader links={[{ href: "/", label: "Home" }, { href: "/forge", label: "Forge" }]} />
 
       <section className="hero">
         <div className="eyebrow">Important limits</div>
@@ -26,6 +24,8 @@ export default function DisclaimerPage() {
           <li>Test small before building large.</li>
         </ul>
       </section>
+
+      <SiteFooter />
     </main>
   );
 }
