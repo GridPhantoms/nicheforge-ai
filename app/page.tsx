@@ -22,7 +22,7 @@ export default function Home() {
         <div className="eyebrow">AI Business Angle Reports</div>
         <h1>Find the AI automation angle hiding inside any business idea.</h1>
         <p className="lede">
-          Paste a business model, niche, competitor, trend, or rough idea. NicheForge AI generates adjacent markets, automation workflows, offer variants, babysitting-risk warnings, and validation paths.
+          Have an idea? Bring it. Need one? Explore. NicheForge AI helps uncover adjacent markets, automation angles, offer variants, babysitting-risk warnings, and a copy-ready master prompt to keep researching, refining, and pressure-testing the idea.
         </p>
         <div className="cta-row">
           <Link href="/forge" className="button">Generate a beta report</Link>
