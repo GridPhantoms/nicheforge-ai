@@ -22,9 +22,9 @@ const initialState: FormState = {
   betaCode: "",
   idea: "",
   audience: "",
-  modelPreference: "No preference",
-  automationLevel: "85% automated / mostly systemized",
-  callTolerance: "One onboarding call is okay",
+  modelPreference: "",
+  automationLevel: "",
+  callTolerance: "",
   assets: [],
   customAssets: "",
   avoid: [],
@@ -80,12 +80,12 @@ export default function KnownIdeaPage() {
         <form className="panel form-grid wide-form" onSubmit={submit}>
           <label><span>Beta access code <em className="required">required</em></span><input value={form.betaCode} onChange={(e) => update("betaCode", e.target.value)} placeholder="Enter private beta code" required /></label>
           <label><span>Business idea, model, niche, competitor, X post, or rough concept <em className="required">required</em></span><textarea value={form.idea} onChange={(e) => update("idea", e.target.value)} placeholder="Example: AI receptionist for dentists, automated competitor tracker for med spas, or an X post about a creator selling templates..." required /></label>
-          <label><span>Target audience / buyer <em>optional</em></span><input value={form.audience} onChange={(e) => update("audience", e.target.value)} placeholder="Local med spa owners, executive pastors, solo consultants, agency teams" /></label>
+          <label><span>Target audience / buyer <em>optional</em></span><input value={form.audience} onChange={(e) => update("audience", e.target.value)} /></label>
           <div className="two">
-            <label><span>Preferred model <em>optional</em></span><select value={form.modelPreference} onChange={(e) => update("modelPreference", e.target.value)}>{businessModels.map((model) => <option key={model}>{model}</option>)}</select></label>
-            <label><span>Desired automation level <em>optional</em></span><select value={form.automationLevel} onChange={(e) => update("automationLevel", e.target.value)}>{automationLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
+            <label><span>Preferred model <em>optional</em></span><select value={form.modelPreference} onChange={(e) => update("modelPreference", e.target.value)}><option value="">Choose one</option>{businessModels.map((model) => <option key={model}>{model}</option>)}</select></label>
+            <label><span>Desired automation level <em>optional</em></span><select value={form.automationLevel} onChange={(e) => update("automationLevel", e.target.value)}><option value="">Choose one</option>{automationLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
           </div>
-          <label><span>Client interaction tolerance <em>optional</em></span><select value={form.callTolerance} onChange={(e) => update("callTolerance", e.target.value)}>{callToleranceLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
+          <label><span>Client interaction tolerance <em>optional</em></span><select value={form.callTolerance} onChange={(e) => update("callTolerance", e.target.value)}><option value="">Choose one</option>{callToleranceLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
 
           <div className="field-block">
             <div className="field-label"><span>What advantages can you bring? <em>optional</em></span></div>
