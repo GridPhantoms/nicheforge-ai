@@ -80,7 +80,7 @@ export default function KnownIdeaPage() {
         <form className="panel form-grid wide-form" onSubmit={submit}>
           <label><span>Beta access code <em className="required">required</em></span><input value={form.betaCode} onChange={(e) => update("betaCode", e.target.value)} placeholder="Enter private beta code" required /></label>
           <label><span>Business idea, model, niche, competitor, X post, or rough concept <em className="required">required</em></span><textarea value={form.idea} onChange={(e) => update("idea", e.target.value)} placeholder="Example: AI receptionist for dentists, automated competitor tracker for med spas, or an X post about a creator selling templates..." required /></label>
-          <label><span>Target audience / buyer <em>optional</em></span><input value={form.audience} onChange={(e) => update("audience", e.target.value)} placeholder="Example: local med spa owners, executive pastors, solo consultants, agency teams" /></label>
+          <label><span>Target audience / buyer <em>optional</em></span><input value={form.audience} onChange={(e) => update("audience", e.target.value)} placeholder="Local med spa owners, executive pastors, solo consultants, agency teams" /></label>
           <div className="two">
             <label><span>Preferred model <em>optional</em></span><select value={form.modelPreference} onChange={(e) => update("modelPreference", e.target.value)}>{businessModels.map((model) => <option key={model}>{model}</option>)}</select></label>
             <label><span>Desired automation level <em>optional</em></span><select value={form.automationLevel} onChange={(e) => update("automationLevel", e.target.value)}>{automationLevels.map((level) => <option key={level}>{level}</option>)}</select></label>
@@ -91,14 +91,14 @@ export default function KnownIdeaPage() {
             <div className="field-label"><span>What advantages can you bring? <em>optional</em></span></div>
             <p className="microcopy">Skills, assets, audience, or advantages means anything the report should consider: niche knowledge, writing ability, access to buyers, sales ability, no-code skills, or an existing audience.</p>
             <ChoiceButtons options={assetOptions} selected={form.assets} onToggle={(value) => update("assets", toggle(form.assets, value))} />
-            <textarea value={form.customAssets} onChange={(e) => update("customAssets", e.target.value)} placeholder="Optional example: I know nonprofit ops, can write strong emails, have a local owner network, or can build Zapier automations." />
+            <label><span>Add your own:</span><textarea value={form.customAssets} onChange={(e) => update("customAssets", e.target.value)} placeholder="Optional example: I know nonprofit ops, can write strong emails, have a local owner network, or can build Zapier automations." /></label>
           </div>
 
           <div className="field-block">
             <div className="field-label"><span>Anything you want to avoid? <em>optional</em></span></div>
             <p className="microcopy">Interview-style preference check: what should NicheForge steer away from?</p>
             <ChoiceButtons options={avoidOptions} selected={form.avoid} onToggle={(value) => update("avoid", toggle(form.avoid, value))} />
-            <textarea value={form.customAvoid} onChange={(e) => update("customAvoid", e.target.value)} placeholder="Optional example: avoid cold calls, avoid regulated niches, avoid heavy custom dashboards, or avoid ad-spend-dependent ideas." />
+            <label><span>Add your own:</span><textarea value={form.customAvoid} onChange={(e) => update("customAvoid", e.target.value)} placeholder="Optional example: avoid cold calls, avoid regulated niches, avoid heavy custom dashboards, or avoid ad-spend-dependent ideas." /></label>
           </div>
           <button type="submit">Generate NicheForge Report</button>
           <p className="notice">Brainstorming only. No guarantees, no financial/legal advice, and every idea needs real-world validation before building.</p>
