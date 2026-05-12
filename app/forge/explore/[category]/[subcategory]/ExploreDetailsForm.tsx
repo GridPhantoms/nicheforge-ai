@@ -27,9 +27,7 @@ type FormState = {
   automationLevel: string;
   callTolerance: string;
   assets: string[];
-  customAssets: string;
   avoid: string[];
-  customAvoid: string;
 };
 
 const initialState: FormState = {
@@ -41,9 +39,7 @@ const initialState: FormState = {
   automationLevel: "85% automated / mostly systemized",
   callTolerance: "One onboarding call is okay",
   assets: [],
-  customAssets: "",
   avoid: ["Avoid heavy custom client work"],
-  customAvoid: "",
 };
 
 function toggle(list: string[], value: string) {
@@ -92,8 +88,8 @@ Preferred business model: ${form.modelPreference}
 Budget/pricing preference: ${form.budgetPreference || "not specified"}
 Desired automation: ${form.automationLevel}
 Client interaction tolerance: ${form.callTolerance}
-Skills/assets/audience/advantages: ${[...form.assets, form.customAssets].filter(Boolean).join("; ") || "not specified"}
-Avoid/preferences: ${[...form.avoid, form.customAvoid].filter(Boolean).join("; ") || "not specified"}
+Skills/assets/audience/advantages: ${form.assets.filter(Boolean).join("; ") || "not specified"}
+Avoid/preferences: ${form.avoid.filter(Boolean).join("; ") || "not specified"}
 
 Generate several possible business concepts first, then select the strongest one and produce the full NicheForge report.`;
   }
@@ -107,8 +103,8 @@ Generate several possible business concepts first, then select the strongest one
       modelPreference: form.modelPreference,
       automationLevel: form.automationLevel,
       callTolerance: form.callTolerance,
-      assets: [...form.assets, form.customAssets].filter(Boolean).join("; "),
-      avoid: [...form.avoid, form.customAvoid].filter(Boolean).join("; "),
+      assets: form.assets.filter(Boolean).join("; "),
+      avoid: form.avoid.filter(Boolean).join("; "),
       mode: "explore",
     }));
     router.push("/report");
@@ -151,14 +147,12 @@ Generate several possible business concepts first, then select the strongest one
             <div className="field-label"><span>What advantages can you bring? <em>optional</em></span></div>
             <p className="microcopy">Pick anything true. This means skills, access, audience, niche knowledge, or unfair advantages NicheForge should consider.</p>
             <ChoiceButtons options={assetOptions} selected={form.assets} onToggle={(value) => update("assets", toggle(form.assets, value))} />
-            <textarea value={form.customAssets} onChange={(e) => update("customAssets", e.target.value)} placeholder="Optional example: I know church ops, have a donor list, can write emails, or can sell to local owners." />
           </div>
 
           <div className="field-block">
             <div className="field-label"><span>Anything you want to avoid? <em>optional</em></span></div>
-            <p className="microcopy">Think interview-style preferences: what would make the business annoying, risky, or unrealistic for you?</p>
+            <p className="microcopy">What would make the business annoying, risky, or unrealistic for you?</p>
             <ChoiceButtons options={avoidOptions} selected={form.avoid} onToggle={(value) => update("avoid", toggle(form.avoid, value))} />
-            <textarea value={form.customAvoid} onChange={(e) => update("customAvoid", e.target.value)} placeholder="Optional example: avoid cold calling, avoid medical claims, avoid custom dashboards, or avoid anything needing ad spend." />
           </div>
 
           <button type="submit">Generate NicheForge Report</button>

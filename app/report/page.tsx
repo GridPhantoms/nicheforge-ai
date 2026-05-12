@@ -19,6 +19,8 @@ function MarkdownLite({ text }: { text: string }) {
   const lines = text.split("\n");
   const blocks: React.ReactNode[] = [];
   let listItems: string[] = [];
+  let codeLines: string[] = [];
+  let inCodeBlock = false;
 
   function flushList() {
     if (!listItems.length) return;
@@ -26,8 +28,31 @@ function MarkdownLite({ text }: { text: string }) {
     listItems = [];
   }
 
+  function flushCode() {
+    if (!codeLines.length) return;
+    blocks.push(<pre key={`pre-${blocks.length}`}><code>{codeLines.join("\n")}</code></pre>);
+    codeLines = [];
+  }
+
   lines.forEach((raw, index) => {
     const line = raw.trim();
+
+    if (line.startsWith("```")) {
+      flushList();
+      if (inCodeBlock) {
+        inCodeBlock = false;
+        flushCode();
+      } else {
+        inCodeBlock = true;
+      }
+      return;
+    }
+
+    if (inCodeBlock) {
+      codeLines.push(raw);
+      return;
+    }
+
     if (!line) {
       flushList();
       return;
@@ -51,6 +76,7 @@ function MarkdownLite({ text }: { text: string }) {
     }
   });
   flushList();
+  flushCode();
   return <>{blocks}</>;
 }
 
@@ -58,6 +84,25 @@ export default function ReportPage() {
   const [status, setStatus] = useState<Status>("loading");
   const [report, setReport] = useState("");
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+
+  async function copyReport() {
+    await navigator.clipboard.writeText(report);
+    setCopied(true);
+    window.setTimeout(() => setCopied(false), 1800);
+  }
+
+  function downloadTextReport() {
+    const blob = new Blob([report], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "nicheforge-report.txt";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+  }
 
   useEffect(() => {
     async function generate() {
@@ -131,6 +176,18 @@ export default function ReportPage() {
           <article className="panel markdown-report">
             <MarkdownLite text={report} />
           </article>
+          <section className="panel report-export">
+            <div>
+              <div className="eyebrow">Export & reuse</div>
+              <h2>Take this into your own AI workflow.</h2>
+              <p>Copy the report into your own chatbot, download a text file, or use your browser’s print dialog to save a clean PDF.</p>
+            </div>
+            <div className="report-actions">
+              <button type="button" onClick={copyReport}>{copied ? "Copied" : "Copy full report"}</button>
+              <button type="button" className="button secondary" onClick={downloadTextReport}>Download .txt</button>
+              <button type="button" className="button secondary" onClick={() => window.print()}>Print / save PDF</button>
+            </div>
+          </section>
         </section>
       )}
     </main>
