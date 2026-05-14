@@ -116,9 +116,9 @@ const detailOptionsBySubcategory: Record<string, DetailOptions> = {
     buyers: ["Not sure", "Independent insurance agents", "Agency owners", "Renewal managers", "Claims coordinators", "Benefits brokers", "Customer service reps"],
     workflows: ["Not sure", "Policy renewal reminders", "Lead qualification", "Claims prep", "Coverage Q&A", "Cross-sell opportunities", "Client document collection"],
   },
-  "real-estate": {
-    buyers: ["Not sure", "Real estate agents", "Brokerage owners", "Property managers", "Buyer agents", "Listing coordinators", "Investor-focused agents"],
-    workflows: ["Not sure", "Open-house follow-up", "Buyer update emails", "Listing research", "Local market reports", "Lead nurturing", "Property management requests"],
+  "architects-and-engineers": {
+    buyers: ["Not sure", "Architecture firms", "Engineering firms", "Project managers", "Principals/partners", "Proposal coordinators", "Operations managers"],
+    workflows: ["Not sure", "RFP summaries", "Proposal prep", "Project documentation", "Client update drafts", "Meeting note summaries", "Permit/checklist tracking"],
   },
   recruiting: {
     buyers: ["Not sure", "Recruiting agencies", "HR managers", "Talent acquisition leads", "Staffing firms", "Hiring managers", "Recruiting coordinators"],
@@ -223,6 +223,102 @@ const detailOptionsBySubcategory: Record<string, DetailOptions> = {
   "regulatory-trackers": {
     buyers: ["Not sure", "Compliance teams", "Grant teams", "Policy consultants", "Trade associations", "Regulated SMBs", "Operations leaders"],
     workflows: ["Not sure", "Rule update summaries", "Compliance deadline alerts", "Grant deadline tracking", "Policy change briefs", "Action checklist generation", "Monthly digest reports"],
+  },
+  "shopify-stores": {
+    buyers: ["Not sure", "Shopify store owners", "Ecommerce managers", "DTC founders", "Growth marketers", "Customer support leads", "Brand managers"],
+    workflows: ["Not sure", "Product description updates", "Abandoned cart recovery", "Review mining", "Post-purchase follow-up", "Bundle and upsell ideas", "Customer support FAQs"],
+  },
+  "amazon-sellers": {
+    buyers: ["Not sure", "Amazon sellers", "Marketplace operators", "Listing managers", "FBA brand owners", "Ecommerce agencies", "Product researchers"],
+    workflows: ["Not sure", "Listing optimization", "Review mining", "Competitor price tracking", "Keyword research", "Ad report summaries", "Q&A response drafting"],
+  },
+  "subscription-boxes": {
+    buyers: ["Not sure", "Subscription box founders", "Retention managers", "Ecommerce operators", "Customer success teams", "Brand marketers", "Operations coordinators"],
+    workflows: ["Not sure", "Churn prevention", "Welcome sequence drafts", "Renewal messaging", "Product education", "Survey response summaries", "Upsell/cross-sell ideas"],
+  },
+  "fashion-and-apparel-brands": {
+    buyers: ["Not sure", "Apparel brand owners", "Fashion ecommerce managers", "Merchandising teams", "Growth marketers", "Customer support teams", "Boutique operators"],
+    workflows: ["Not sure", "Product copy creation", "Sizing FAQ responses", "Return reason analysis", "Drop campaign planning", "Review mining", "Style guide content"],
+  },
+  "beauty-and-skincare-brands": {
+    buyers: ["Not sure", "Beauty brand founders", "Skincare ecommerce managers", "Growth marketers", "Customer education teams", "Influencer managers", "Support teams"],
+    workflows: ["Not sure", "Routine education drafts", "Ingredient FAQ responses", "Review and UGC mining", "Post-purchase nurture", "Bundle recommendations", "Influencer brief creation"],
+  },
+  "food-and-beverage-brands": {
+    buyers: ["Not sure", "Food brand founders", "Beverage brand owners", "DTC operators", "Retail sales teams", "Community managers", "Marketing leads"],
+    workflows: ["Not sure", "Recipe content creation", "Reorder reminders", "Retailer outreach prep", "Customer FAQ responses", "Review mining", "Sampling campaign follow-up"],
+  },
+  "therapy-practices": {
+    buyers: ["Not sure", "Therapy practice owners", "Practice managers", "Intake coordinators", "Clinic admins", "Group practice directors", "Referral coordinators"],
+    workflows: ["Not sure", "Intake form follow-up", "Appointment reminders", "Referral follow-up", "Resource draft creation", "FAQ responses", "No-show reduction"],
+  },
+  chiropractors: {
+    buyers: ["Not sure", "Chiropractic clinic owners", "Practice managers", "Front desk teams", "Patient coordinators", "Wellness marketers", "Multi-location operators"],
+    workflows: ["Not sure", "New-patient intake", "Appointment reminders", "Care-plan education drafts", "Review requests", "Reactivation follow-up", "Patient FAQ responses"],
+  },
+  "physical-therapy-clinics": {
+    buyers: ["Not sure", "PT clinic owners", "Clinic managers", "Physical therapists", "Patient coordinators", "Referral coordinators", "Operations admins"],
+    workflows: ["Not sure", "Exercise reminder drafts", "Progress check-ins", "Referral updates", "Appointment reminders", "Patient education FAQs", "Discharge follow-up"],
+  },
+  "nutritionists-and-dietitians": {
+    buyers: ["Not sure", "Nutritionists", "Dietitian practices", "Wellness coaches", "Clinic managers", "Program operators", "Client success teams"],
+    workflows: ["Not sure", "Client onboarding", "Habit check-ins", "Recipe/resource drafts", "Appointment reminders", "Progress summaries", "FAQ responses"],
+  },
+  "senior-care-providers": {
+    buyers: ["Not sure", "Senior care operators", "Home care agencies", "Care coordinators", "Family communication leads", "Operations managers", "Intake teams"],
+    workflows: ["Not sure", "Family update drafts", "Care note summaries", "Intake summaries", "Schedule coordination", "Referral follow-up", "Review requests"],
+  },
+  "wellness-clinics": {
+    buyers: ["Not sure", "Wellness clinic owners", "Clinic managers", "Patient coordinators", "Marketing leads", "Practitioners", "Front desk teams"],
+    workflows: ["Not sure", "Consultation prep", "Package follow-up", "Education draft creation", "Appointment reminders", "Review requests", "Lead nurturing"],
+  },
+  "marketing-agencies": {
+    buyers: ["Not sure", "Marketing agency owners", "Account managers", "Client success leads", "Campaign managers", "Content strategists", "Operations leads"],
+    workflows: ["Not sure", "Client onboarding", "Monthly report summaries", "Content calendar planning", "Lead qualification", "Campaign recap drafts", "Client follow-up"],
+  },
+  "web-design-studios": {
+    buyers: ["Not sure", "Web design studio owners", "Project managers", "Freelance designers", "Client coordinators", "Creative directors", "No-code builders"],
+    workflows: ["Not sure", "Website intake", "Sitemap drafts", "Launch checklists", "Client content collection", "Revision summaries", "Proposal drafts"],
+  },
+  "seo-agencies": {
+    buyers: ["Not sure", "SEO agency owners", "SEO strategists", "Account managers", "Content leads", "Technical SEO teams", "Consultants"],
+    workflows: ["Not sure", "Keyword report summaries", "Content brief creation", "Technical issue summaries", "Client update drafts", "Competitor content scans", "Monthly reporting"],
+  },
+  "paid-ads-agencies": {
+    buyers: ["Not sure", "Paid ads agency owners", "Media buyers", "Account managers", "Growth marketers", "Creative strategists", "Performance teams"],
+    workflows: ["Not sure", "Performance summaries", "Creative testing notes", "Budget alert drafts", "Client reporting", "Landing page observations", "Campaign recap emails"],
+  },
+  "video-editors": {
+    buyers: ["Not sure", "Video editors", "Content agencies", "YouTube producers", "Podcast teams", "Creator operators", "Post-production leads"],
+    workflows: ["Not sure", "Clip idea generation", "Client intake", "Revision summaries", "Publishing checklists", "Title/description drafts", "Content repurposing"],
+  },
+  "freelance-consultants": {
+    buyers: ["Not sure", "Freelance consultants", "Solo operators", "Fractional leaders", "Independent strategists", "Client service providers", "Advisors"],
+    workflows: ["Not sure", "Discovery prep", "Proposal drafts", "Delivery checklists", "Follow-up notes", "Client research packets", "Scope creep control"],
+  },
+  "property-managers": {
+    buyers: ["Not sure", "Property managers", "Multifamily operators", "Leasing teams", "HOA managers", "Owner relations teams", "Maintenance coordinators"],
+    workflows: ["Not sure", "Tenant message triage", "Maintenance request summaries", "Owner update drafts", "Lease reminder emails", "Review responses", "Vendor follow-up"],
+  },
+  "short-term-rentals": {
+    buyers: ["Not sure", "STR operators", "Airbnb hosts", "Property management firms", "Guest experience teams", "Cleaning coordinators", "Hospitality marketers"],
+    workflows: ["Not sure", "Guest communication", "Review reply drafts", "Listing description updates", "Local guide content", "Cleaning issue summaries", "Upsell messages"],
+  },
+  "real-estate-investors": {
+    buyers: ["Not sure", "Real estate investors", "Acquisition teams", "Wholesalers", "Investor agents", "Asset managers", "Deal analysts"],
+    workflows: ["Not sure", "Deal screening", "Market comp reports", "Rehab note summaries", "Seller outreach follow-up", "Property research", "Investment memo drafts"],
+  },
+  "commercial-brokers": {
+    buyers: ["Not sure", "Commercial brokers", "Brokerage teams", "Tenant reps", "Landlord reps", "Research analysts", "Listing coordinators"],
+    workflows: ["Not sure", "Tenant/buyer briefs", "Listing summaries", "Market research", "Follow-up sequences", "Comp report drafts", "Prospect list cleanup"],
+  },
+  "home-inspectors": {
+    buyers: ["Not sure", "Home inspectors", "Inspection companies", "Real estate agents", "Client coordinators", "Operations admins", "Report writers"],
+    workflows: ["Not sure", "Inspection summaries", "Repair explanation drafts", "Client follow-up", "Review requests", "Agent update emails", "Report checklist cleanup"],
+  },
+  "mortgage-brokers": {
+    buyers: ["Not sure", "Mortgage brokers", "Loan officers", "Brokerage teams", "Processor teams", "Referral partners", "Client coordinators"],
+    workflows: ["Not sure", "Document collection", "Borrower update drafts", "Rate education content", "Referral follow-up", "Pre-approval checklists", "FAQ responses"],
   },
 };
 
