@@ -8,13 +8,21 @@ type Status = "loading" | "ready" | "error" | "missing";
 
 const REQUEST_STORAGE_KEY = "nicheforge:pending-report";
 const MAX_GENERATION_ATTEMPTS = 2;
+const GENERATION_STAGES = [
+  "Analyzing niche signal...",
+  "Mapping automation angles...",
+  "Scoring babysitting risk...",
+  "Building validation sprint...",
+  "Drafting low-touch offer variants...",
+  "Assembling your master prompt...",
+];
 
 function getFriendlyErrorMessage(message: string) {
   const normalized = message.toLowerCase();
   if (normalized.includes("load failed") || normalized.includes("failed to fetch") || normalized.includes("networkerror")) {
     return "The AI request took too long or the browser connection dropped. Your idea is still okay — retry with this tab open.";
   }
-  if (normalized.includes("unexpected end") || normalized.includes("json")) {
+  if (normalized.includes("unexpected end") || normalized.includes("json") || normalized.includes("stream")) {
     return "The report response was interrupted before it finished loading. Please retry with this tab open.";
   }
   return message || "Something went wrong while generating the report.";
@@ -102,6 +110,7 @@ export default function ReportPage() {
   const [payload, setPayload] = useState("");
   const [attempt, setAttempt] = useState(1);
   const [copied, setCopied] = useState(false);
+  const [activeStage, setActiveStage] = useState(0);
 
   async function copyReport() {
     await navigator.clipboard.writeText(report);
@@ -123,8 +132,10 @@ export default function ReportPage() {
 
   const generateReport = useCallback(async function runGeneration(raw: string, attemptNumber = 1) {
     setStatus("loading");
+    setReport("");
     setError("");
     setAttempt(attemptNumber);
+    setActiveStage(0);
 
     try {
       const response = await fetch("/api/generate", {
@@ -133,18 +144,42 @@ export default function ReportPage() {
         body: raw,
       });
       const contentType = response.headers.get("content-type") || "";
-      const data = contentType.includes("application/json")
-        ? await response.json()
-        : { error: await response.text() };
 
-      if (!response.ok) throw new Error(data.error || "Report generation failed.");
-      if (!data.report) throw new Error("The report response was empty. Please try again.");
+      if (!response.ok) {
+        const data = contentType.includes("application/json")
+          ? await response.json()
+          : { error: await response.text() };
+        throw new Error(data.error || "Report generation failed.");
+      }
 
-      setReport(data.report);
+      if (contentType.includes("application/json")) {
+        const data = await response.json();
+        if (!data.report) throw new Error("The report response was empty. Please try again.");
+        setReport(data.report);
+        setStatus("ready");
+        return;
+      }
+
+      if (!response.body) throw new Error("The report stream could not be opened.");
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        accumulated += decoder.decode(value, { stream: true });
+        setReport(accumulated);
+      }
+
+      accumulated += decoder.decode();
+      if (!accumulated.trim()) throw new Error("The report response was empty. Please try again.");
+      setReport(accumulated);
       setStatus("ready");
     } catch (err) {
       const message = err instanceof Error ? err.message : "Something went wrong.";
-      const retryable = /load failed|failed to fetch|networkerror|unexpected end|json/i.test(message);
+      const retryable = /load failed|failed to fetch|networkerror|unexpected end|json|stream/i.test(message);
 
       if (attemptNumber < MAX_GENERATION_ATTEMPTS && retryable) {
         window.setTimeout(() => runGeneration(raw, attemptNumber + 1), 1500);
@@ -167,18 +202,47 @@ export default function ReportPage() {
     generateReport(raw);
   }, [generateReport]);
 
+  useEffect(() => {
+    if (status !== "loading") return;
+    const timer = window.setInterval(() => {
+      setActiveStage((current) => (current + 1) % GENERATION_STAGES.length);
+    }, 2600);
+    return () => window.clearInterval(timer);
+  }, [status]);
+
   return (
     <main className="shell">
       <SiteHeader links={[{ href: "/forge", label: "New report" }, { href: "/disclaimer", label: "Disclaimer" }]} />
 
-      {status === "loading" && (
+      {status === "loading" && !report && (
         <section className="loading-stage">
           <div className="orb" />
           <div className="eyebrow">Forging report</div>
           <h1>Mapping niches, automation angles, and babysitting traps…</h1>
-          <p className="lede">This can take 60–90 seconds in the private beta. Keep this tab open while NicheForge builds the report.</p>
+          <p className="lede">Deep beta reports can take 60–90 seconds. Keep this tab open while NicheForge builds the report.</p>
+          <div className="loading-checklist" aria-live="polite">
+            {GENERATION_STAGES.slice(0, 4).map((stage, index) => (
+              <span className={index === activeStage % 4 ? "active" : ""} key={stage}>{stage}</span>
+            ))}
+          </div>
           {attempt > 1 && <p className="notice">Connection hiccup detected. Retrying automatically… attempt {attempt} of {MAX_GENERATION_ATTEMPTS}.</p>}
           <div className="progress-bar"><span /></div>
+        </section>
+      )}
+
+      {status === "loading" && report && (
+        <section className="section">
+          <div className="report-header streaming-header">
+            <div>
+              <div className="eyebrow">Report streaming</div>
+              <h1>Your report is printing now…</h1>
+              <p className="lede">{GENERATION_STAGES[activeStage]} Keep this tab open until the export buttons appear.</p>
+            </div>
+            <div className="printing-cursor" aria-hidden="true" />
+          </div>
+          <article className="panel markdown-report printing-report" aria-live="polite">
+            <MarkdownLite text={report} />
+          </article>
         </section>
       )}
 
