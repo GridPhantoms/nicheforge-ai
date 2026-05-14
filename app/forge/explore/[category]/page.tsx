@@ -10,7 +10,7 @@ export default async function ExploreCategoryPage({ params }: { params: Promise<
 
   return (
     <main className="shell">
-      <SiteHeader links={[{ href: "/forge/explore", label: "Back" }, { href: "/early-access", label: "Early access" }]} />
+      <SiteHeader links={[{ href: "/forge/explore", label: "Back" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Path 2 / Step 2 of 4</div>

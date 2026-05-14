@@ -20,5 +20,4 @@ Required env vars:
 
 - `/` neutral public homepage
 - `/forge` beta-code gated report generator
-- `/early-access` private early tester page
 - `/disclaimer` safety/disclaimer page

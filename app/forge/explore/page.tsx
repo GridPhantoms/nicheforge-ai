@@ -5,7 +5,7 @@ import { exploreCategories } from "./options";
 export default function ExplorePage() {
   return (
     <main className="shell">
-      <SiteHeader links={[{ href: "/forge", label: "Change path" }, { href: "/early-access", label: "Early access" }]} />
+      <SiteHeader links={[{ href: "/forge", label: "Change path" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Path 2 / Step 1 of 4</div>

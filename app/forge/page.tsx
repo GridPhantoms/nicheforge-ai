@@ -4,7 +4,7 @@ import { SiteHeader } from "../components/SiteHeader";
 export default function ForgePage() {
   return (
     <main className="shell">
-      <SiteHeader links={[{ href: "/", label: "Home" }, { href: "/early-access", label: "Early access" }]} />
+      <SiteHeader links={[{ href: "/", label: "Home" }]} />
 
       <section className="hero compact-hero">
         <div className="eyebrow">Private beta forge</div>

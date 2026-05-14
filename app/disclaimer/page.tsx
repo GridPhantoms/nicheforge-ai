@@ -1,4 +1,3 @@
-import { SiteFooter } from "../components/SiteFooter";
 import { SiteHeader } from "../components/SiteHeader";
 
 export default function DisclaimerPage() {
@@ -25,7 +24,6 @@ export default function DisclaimerPage() {
         </ul>
       </section>
 
-      <SiteFooter />
     </main>
   );
 }
