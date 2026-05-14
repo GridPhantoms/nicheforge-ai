@@ -299,7 +299,7 @@ Generate several possible business concepts first, then select the strongest one
 
           <div className="two">
             <label><span>Who might buy this? <em>optional</em></span><select value={form.buyerType} onChange={(e) => update("buyerType", e.target.value)}>{selectOptions(detailOptions.buyers)}</select></label>
-            <label><span>What workflow sounds painful? <em>optional</em></span><select value={form.painPoint} onChange={(e) => update("painPoint", e.target.value)}>{selectOptions(detailOptions.workflows)}</select></label>
+            <label><span>What pain point should the idea solve for your customer? <em>optional</em></span><select value={form.painPoint} onChange={(e) => update("painPoint", e.target.value)}>{selectOptions(detailOptions.workflows)}</select></label>
           </div>
 
           <div className="two">
