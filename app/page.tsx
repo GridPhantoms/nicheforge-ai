@@ -2,7 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "./components/SiteHeader";
 
 const cards = [
-  ["Adjacent niches", "Find narrower, less obvious markets that could fit a proven business model."],
+  ["Market reality", "Check whether the buyer, pain, reachability, and willingness to pay look real before you build."],
   ["Automation angles", "Map which parts of the offer AI can help research, generate, monitor, or fulfill."],
   ["Babysitting risk", "Spot ideas that are likely to become high-touch jobs before you waste months building them."],
   ["Prompt generation", "Create a reusable master prompt to keep refining and testing the idea."],
@@ -17,7 +17,7 @@ export default function Home() {
         <div className="eyebrow">AI Business Angle Reports</div>
         <h1>Find the AI automation angle hiding inside any business idea.</h1>
         <p className="lede">
-          Have an idea? Bring it. Need one? Explore. NicheForge AI helps uncover adjacent markets, automation angles, offer variants, babysitting-risk warnings, and a copy-ready master prompt to keep researching, refining, and pressure-testing the idea.
+          Have an idea? Bring it. Need one? Explore. NicheForge AI helps pressure-test market reality, uncover adjacent markets, map automation angles, shape offer variants, flag babysitting risk, and generate a copy-ready master prompt to keep researching the idea.
         </p>
         <div className="cta-row">
           <Link href="/forge" className="button">Generate a beta report</Link>
@@ -37,7 +37,7 @@ export default function Home() {
       <section className="section panel">
         <h2>Built for practical brainstorming, not fantasy forecasts.</h2>
         <p>
-          NicheForge AI is for founders and operators who want sharper ideation before they build. It does not promise profit, demand, or success. It helps you explore business angles, then gives you prompts and validation steps to keep researching with your own AI chatbot, agent, or human network.
+          NicheForge AI is for founders and operators who want sharper ideation before they build. It does not promise profit, demand, or success. It helps you test whether a market may exist, explore business angles, then gives you prompts and validation steps to keep researching with your own AI chatbot, agent, or human network.
         </p>
       </section>
 

@@ -10,6 +10,7 @@ const REQUEST_STORAGE_KEY = "nicheforge:pending-report";
 const MAX_GENERATION_ATTEMPTS = 2;
 const GENERATION_STAGES = [
   "Analyzing niche signal...",
+  "Checking market reality...",
   "Mapping automation angles...",
   "Scoring babysitting risk...",
   "Building validation sprint...",

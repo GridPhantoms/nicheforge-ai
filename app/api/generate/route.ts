@@ -86,6 +86,9 @@ Quality rules:
 - Favor low-touch, AI-automated, productized, repeatable business designs.
 - Explicitly identify babysitting risk: custom strategy, client calls, revisions, credential handling, subjective creative work, regulated advice, integrations, and manual fulfillment.
 - Include adjacent niches, sharper vertical pivots, automation workflows, a tiny validation sprint, and a strong reusable master prompt.
+- Add a skeptical market-reality layer before planning: do not assume every idea has a real market, reachable buyers, or willingness to pay.
+- If market signal is weak, say so plainly and shift execution advice toward validation experiments, customer discovery, or a narrower pivot instead of a confident launch plan.
+- Keep pricing logic internally consistent: one-time starter/test offers should be materially cheaper than recurring, unlimited, multi-client, agency, or done-for-you tiers unless a specific reason is stated.
 - If the idea touches regulated industries, call out compliance/legal review needs.
 - Output clean markdown. No tables. Use bullets and section headings.
 - Avoid big uninterrupted paragraphs. Sections should be scannable and categorized.
@@ -93,7 +96,59 @@ Quality rules:
 - Use current platform language: say "X post", "X thread", or "short social post". Do not say "tweet" or "tweet script".
 - Avoid phrases like "game-changer", "unlock", "revolutionize", "10x", and "leverage AI" unless quoting the user's input.
 `,
-      prompt: `Create an AI Business Angle Report for this beta user input:\n\n${userContext}\n\nRequired markdown structure and formatting:\n\n# NicheForge AI Business Angle Report\n\n## Selected Strongest Concept\nUse 4-5 concise bullets. Include **Concept:**, **Target buyer:**, **Core pain:**, **Low-touch offer:**, and **Why it wins:**. Make the concept feel specific enough that the user could explain it to a buyer today.\n\n## 1. Quick Diagnosis\nUse 5-6 categorized bullets with bold lead-in labels such as **Signal:**, **Opportunity:**, **Constraint:**, **Automation fit:**, **Babysitting risk:**, and **Verdict:**.\n\n## 2. Why This Model Might Work\nUse 5-6 bullets with bold lead-in labels. Be specific about buyer urgency, repeatability, data/workflow access, willingness to pay, distribution angle, and automation fit.\n\n## 3. Adjacent Niche Opportunities\nUse 5-6 bullets. Each bullet must follow this style: **Title:** concise explanation of the niche, buyer, pain, why it is adjacent, and why it may be easier or harder than the original idea.\n\n## 4. AI Automation Map\nUse this exact rendering-friendly structure. Do not use nested indentation. For each stage, use a ### heading, then flat bullets for **Input:**, **AI task:**, **Human review:**, and **Output:**. Include 3-4 stages. Example structure:\n\n### Stage 1: Intake & Signal Capture\n- **Input:** ...\n- **AI task:** ...\n- **Human review:** ...\n- **Output:** ...\n\n## 5. Low-Touch Offer Variants\nUse 4-5 bullets with bold offer names and concise explanations. Include a paid report, a subscription, and a productized service variant if they fit. If you include subscription tiers or pricing options, list them from lowest to highest price and make sure tier names match the economics: Basic/Starter must be cheapest, Pro/Growth must be middle, and Premium/Best/Done-for-you must be highest. Never show a Basic option with a higher price than the Best/Premium option.\n\n## 6. Babysitting Risk Score\nDo not write a paragraph. Use bullets for **Score:**, **Why:**, **Main babysitting traps:**, and **How to reduce it:**. Make the score feel earned, not generic.\n\n## 7. Best MVP / Validation Sprint\nUse a short day-by-day sprint. Bold the day ranges exactly, for example **Days 1-2:**, **Days 3-4:**, **Days 5-7:**. Make the first action something the user can do today without building software. Include what signal would prove the idea deserves more work.\n\n## 8. Risks & Reality Checks\nUse 5-6 bullets with bold lead-in labels. Include buyer risk, delivery risk, data/access risk, compliance risk when relevant, competition/substitution risk, and the most likely reason this could fail.\n\n## 9. Better First Offer\nRecommend one specific first offer. Include bullets for **Promise:**, **Deliverable:**, **Price test:**, **Acquisition test:**, **Fulfillment path:**, and **Why this first:**.\n\n## 10. Master Prompt for Further Exploration\nStart with this exact sentence: Copy this prompt into your own AI chatbot to refine and pressure-test the idea further.\n\nThen provide one substantial reusable master prompt in a fenced code block. The prompt must be written for the user to paste into any AI chatbot. It must not say "You are NicheForge AI." It must not mention NicheForge as the assistant persona. It should ask the chatbot to refine the chosen concept, compare adjacent niches, identify validation steps, reduce babysitting risk, map automation workflows, draft a low-touch offer, and propose X posts or X threads only if social promotion is relevant. Do not use bracket placeholders. Do not call X posts tweets. Keep it practical and complete, not tiny.\n\nKeep the full report dense, practical, and scannable. Preserve depth in the Automation Map and Master Prompt. Trim only filler and repeated points.`,
+      prompt: `Create an AI Business Angle Report for this beta user input:
+
+${userContext}
+
+Required markdown structure and formatting:
+
+# NicheForge AI Business Angle Report
+
+## Selected Strongest Concept
+Use 4-5 concise bullets. Include **Concept:**, **Target buyer:**, **Core pain:**, **Low-touch offer:**, and **Why it wins:**. Make the concept feel specific enough that the user could explain it to a buyer today.
+
+## 1. Quick Diagnosis
+Use 5-6 categorized bullets with bold lead-in labels such as **Signal:**, **Opportunity:**, **Constraint:**, **Automation fit:**, **Babysitting risk:**, and **Verdict:**. The verdict must acknowledge whether the concept appears worth validating, not just whether it sounds interesting.
+
+## 2. Market Reality Check
+This section is mandatory and must come before the plan. Do not assume the market exists. Use 6-7 bullets with bold lead-in labels for **Likely buyer pool:**, **Underserved pain:**, **Existing alternatives:**, **Willingness to pay:**, **Reachability:**, **Market confidence:**, and **What would disprove this:**. End with a clear confidence label: **Strong signal**, **Needs validation**, or **Likely weak niche**. If confidence is low, say why and recommend a narrower pivot or validation path.
+
+## 3. Why This Model Might Work
+Use 5-6 bullets with bold lead-in labels. Be specific about buyer urgency, repeatability, data/workflow access, willingness to pay, distribution angle, and automation fit. If the Market Reality Check was weak, frame this section as conditional: what would need to be true for it to work.
+
+## 4. Adjacent Niche Opportunities
+Use 5-6 bullets. Each bullet must follow this style: **Title:** concise explanation of the niche, buyer, pain, why it is adjacent, and why it may be easier or harder than the original idea. Include at least one narrower pivot if the original market looks questionable.
+
+## 5. AI Automation Map
+Use this exact rendering-friendly structure. Do not use nested indentation. For each stage, use a ### heading, then flat bullets for **Input:**, **AI task:**, **Human review:**, and **Output:**. Include 3-4 stages. Example structure:
+
+### Stage 1: Intake & Signal Capture
+- **Input:** ...
+- **AI task:** ...
+- **Human review:** ...
+- **Output:** ...
+
+## 6. Low-Touch Offer Variants
+Use 4-5 bullets with bold offer names and concise explanations. Include a paid report, a subscription, and a productized service variant if they fit. If you include subscription tiers or pricing options, list them from lowest to highest price and make sure tier names match the economics: Basic/Starter must be cheapest, Pro/Growth must be middle, and Premium/Best/Done-for-you must be highest. A one-time starter/test offer must be materially cheaper than any unlimited, multi-client, agency, recurring, or done-for-you tier. Never give a starter/test offer and an unlimited subscription the same price unless you explicitly explain a narrow promotional reason.
+
+## 7. Babysitting Risk Score
+Do not write a paragraph. Use bullets for **Score:**, **Why:**, **Main babysitting traps:**, and **How to reduce it:**. Make the score feel earned, not generic.
+
+## 8. Best MVP / Validation Sprint
+Use a short day-by-day sprint. Bold the day ranges exactly, for example **Days 1-2:**, **Days 3-4:**, **Days 5-7:**. Make the first action something the user can do today without building software. Include what signal would prove the idea deserves more work. If Market Reality Check is **Needs validation** or **Likely weak niche**, this sprint must focus on proving/disproving demand before building the full offer.
+
+## 9. Risks & Reality Checks
+Use 5-6 bullets with bold lead-in labels. Include buyer risk, delivery risk, data/access risk, compliance risk when relevant, competition/substitution risk, and the most likely reason this could fail. Tie at least one risk back to the Market Reality Check.
+
+## 10. Better First Offer
+Recommend one specific first offer. Include bullets for **Promise:**, **Deliverable:**, **Price test:**, **Acquisition test:**, **Fulfillment path:**, and **Why this first:**. The price test must be logically lower than any recurring, unlimited, multi-client, or done-for-you tier recommended earlier.
+
+## 11. Master Prompt for Further Exploration
+Start with this exact sentence: Copy this prompt into your own AI chatbot to refine and pressure-test the idea further.
+
+Then provide one substantial reusable master prompt in a fenced code block. The prompt must be written for the user to paste into any AI chatbot. It must not say "You are NicheForge AI." It must not mention NicheForge as the assistant persona. It must include the chosen concept, target customer, market-confidence assumptions to verify, likely alternatives/competitors, validation sprint, pricing sanity checks, babysitting-risk constraints, automation boundaries, desired output format, and follow-up questions. It should ask the chatbot to refine the chosen concept, compare adjacent niches, identify validation steps, reduce babysitting risk, map automation workflows, draft a low-touch offer, and propose X posts or X threads only if social promotion is relevant. Do not use bracket placeholders. Do not call X posts tweets. Keep it practical and complete, not tiny.
+
+Keep the full report dense, practical, and scannable. Preserve depth in the Market Reality Check, Automation Map, Better First Offer, and Master Prompt. Trim only filler and repeated points.`,
       onFinish: ({ text, usage }) => {
         console.info("nicheforge_generate_complete", {
           requestId,
